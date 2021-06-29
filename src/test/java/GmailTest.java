@@ -1,12 +1,13 @@
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import pages.*;
 import utils.Waits;
+
+import static org.testng.Assert.*;
 
 public class GmailTest {
     WebDriver driver;
@@ -17,6 +18,7 @@ public class GmailTest {
     SentPage sentPage;
     MailCreatingPage mailCreatingPage;
     DraftPage draftPage;
+    LoginPasswordPage loginPasswordPage;
     private final String mailSubjectText = "hello";
     private final String mailBodyText = "helloooo";
     private final String otherUserMail = "knarikdabaghyan@gmail.com";
@@ -36,14 +38,14 @@ public class GmailTest {
         sentPage = new SentPage(driver, waits);
         mailCreatingPage = new MailCreatingPage(driver, waits);
         draftPage = new DraftPage(driver, waits);
+        loginPasswordPage = new LoginPasswordPage(driver, waits);
     }
 
     @Test()
     public void loginTest() {
         loginEmailPage.enterEmail(userMail);
-        LoginPasswordPage loginPasswordPage = new LoginPasswordPage(driver, waits);
         loginPasswordPage.enterPassword();
-        Assert.assertTrue(gmailMainPage.isInGmailPage(), "It's not Gmail main page");
+        assertTrue(gmailMainPage.isInGmailPage(), "It's not Gmail main page");
     }
 
     @Test(dependsOnMethods = "loginTest")
@@ -55,7 +57,7 @@ public class GmailTest {
         mailCreatingPage.createNewMail(mailSubjectText, mailBodyText,otherUserMail);
         mailCreatingPage.clickOnSetSaveAndCloseButton();
         draftsQuantityAfterCreatingNewMail = gmailMainPage.getDraftsQuantity();
-        Assert.assertEquals(draftsQuantityAfterCreatingNewMail - 1, draftsQuantityBeforeCreatingNewMail, "The message isn't saved in drafts");
+        assertEquals(draftsQuantityAfterCreatingNewMail - 1, draftsQuantityBeforeCreatingNewMail, "The message isn't saved in drafts");
     }
 
     @Test(dependsOnMethods ={ "loginTest","createMailAndSaveInDrafts"})
@@ -72,10 +74,10 @@ public class GmailTest {
     public void sentMailTest() {
         mailCreatingPage.sendMail();
         int draftsQuantityAfterSendingMail = gmailMainPage.getDraftsQuantity();
-        Assert.assertEquals(draftsQuantityAfterSendingMail, draftsQuantityAfterCreatingNewMail - 1, "After sending mail, mail isn't disappeared from drafts");
+        assertEquals(draftsQuantityAfterSendingMail, draftsQuantityAfterCreatingNewMail - 1, "After sending mail, mail isn't disappeared from drafts");
         gmailMainPage.openSentMails();
         int sentMailsAfterSendingNewMail = sentPage.getSentMailsCount();
-        Assert.assertEquals(sentMailsBeforeSendinNewMail + 1, sentMailsAfterSendingNewMail, "Sent mail isn't in Sent folder");
+        assertEquals(sentMailsBeforeSendinNewMail + 1, sentMailsAfterSendingNewMail, "Sent mail isn't in Sent folder");
     }
 
     @AfterClass
