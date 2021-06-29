@@ -58,7 +58,7 @@ public class GmailTest {
         Assert.assertEquals(draftsQuantityAfterCreatingNewMail - 1, draftsQuantityBeforeCreatingNewMail, "The message isn't saved in drafts");
     }
 
-    @Test(dependsOnMethods ={ "loginTest", "createMailAndSaveInDrafts"})
+    @Test(dependsOnMethods ={ "loginTest","createMailAndSaveInDrafts"})
     public void verifyMailContentTest() {
         gmailMainPage.openDraftsPage();
         draftPage.openLastMailFromDrafts();
