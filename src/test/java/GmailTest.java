@@ -58,7 +58,7 @@ public class GmailTest {
         Assert.assertEquals(draftsQuantityAfterCreatingNewMail - 1, draftsQuantityBeforeCreatingNewMail, "The message isn't saved in drafts");
     }
 
-    @Test()
+    @Test(dependsOnMethods ={ "loginTest", "createMailAndSaveInDrafts"})
     public void verifyMailContentTest() {
         gmailMainPage.openDraftsPage();
         draftPage.openLastMailFromDrafts();
@@ -68,7 +68,7 @@ public class GmailTest {
         softAssert.assertAll();
     }
 
-    @Test(priority = 3)
+    @Test(dependsOnMethods ={ "loginTest", "createMailAndSaveInDrafts", "verifyMailContentTest" })
     public void sentMailTest() {
         mailCreatingPage.sendMail();
         int draftsQuantityAfterSendingMail = gmailMainPage.getDraftsQuantity();
