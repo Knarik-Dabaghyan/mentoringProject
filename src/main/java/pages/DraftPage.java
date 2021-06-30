@@ -21,19 +21,15 @@ public class DraftPage {
     @FindBy(xpath = allMailsSubjectLocator)
     private List<WebElement> allMailsSubject;
 
-    public  DraftPage(WebDriver driver, Waits wait){
+    public DraftPage(WebDriver driver, Waits wait) {
         this.waits = wait;
         this.driver = driver;
-        PageFactory.initElements(driver,this);
+        PageFactory.initElements(driver, this);
     }
 
-    public void openLastMailFromDrafts(){
-          waits.waitElementToBeClickableByLocator(By.xpath(allMailsDraftsLocator));
-          allMailsInDrafts.get(0).click();
+    public void openLastMailFromDrafts() {
+        waits.waitElementToBeClickableByLocator(By.xpath(allMailsDraftsLocator));
+        allMailsInDrafts.get(0).click();
     }
 
-    public String getLastMailSubject(){
-        waits.waitElementVisibility(By.xpath(allMailsDraftsLocator));
-        return allMailsSubject.get(1).getText();
-    }
 }

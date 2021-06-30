@@ -34,7 +34,7 @@ public class MailCreatingPage {
     @FindBy(xpath = sendToTextLocator)
     private WebElement sendToText;
 
-    private final String mailSubjectTextLocator= "//div[@class = 'aYF']//span";
+    private final String mailSubjectTextLocator = "//div[@class = 'aYF']//span";
     @FindBy(xpath = mailSubjectTextLocator)
     private WebElement mailSubjectText;
 
@@ -48,12 +48,21 @@ public class MailCreatingPage {
         saveAndCloseButton.click();
     }
 
-    public void createNewMail(String subjectText, String bodyText, String otherUserEmail) {
+    public void enterOtherUserEmail(String otherUserEmail) {
         waits.waitElementToBeClickableByLocator(By.xpath(sendButtonLocator));
         sendToFiled.sendKeys(otherUserEmail);
+    }
+
+    public void enterSubjectText(String subjectText) {
+        waits.waitElementToBeClickableByLocator(By.xpath(sendButtonLocator));
         subjectFiled.sendKeys(subjectText);
+    }
+
+    public void enterBodyText(String bodyText) {
+        waits.waitElementToBeClickableByLocator(By.xpath(sendButtonLocator));
         mailBodyFiled.sendKeys(bodyText);
     }
+
 
     public String getTextFromMailBody() {
         waits.waitElementVisibility(By.xpath(mailBodyLocator));
@@ -70,7 +79,7 @@ public class MailCreatingPage {
         return mailSubjectText.getText();
     }
 
-    public void sendMail() {
+    public void clickSendButton() {
         waits.waitElementToBeClickableByLocator(By.xpath(sendButtonLocator));
         sendButton.click();
     }

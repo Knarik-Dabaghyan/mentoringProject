@@ -9,7 +9,7 @@ import utils.Waits;
 
 public class LoginEmailPage {
     private final WebDriver driver;
-    private  Waits waits;
+    private Waits waits;
     private final String nextButtonLocator = "//div[@id='identifierNext']";
 
     @FindBy(xpath = "//input[@id='identifierId']")
@@ -24,9 +24,12 @@ public class LoginEmailPage {
         PageFactory.initElements(driver, this);
     }
 
-    public void enterEmail(String userMail){
+    public void enterEmail(String userMail) {
         waits.waitElementToBeClickableByLocator(By.xpath(nextButtonLocator));
         emailFiled.sendKeys(userMail);
+    }
+
+    public void clickNextButton() {
         nextButton.click();
     }
 }

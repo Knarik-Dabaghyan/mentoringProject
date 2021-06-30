@@ -17,13 +17,13 @@ public class SentPage {
     @FindBy(xpath = allSentMailsLocator)
     private List<WebElement> allSentMails;
 
-    public SentPage (WebDriver driver, Waits waits){
+    public SentPage(WebDriver driver, Waits waits) {
         this.waits = waits;
         this.driver = driver;
-        PageFactory.initElements(driver,this);
+        PageFactory.initElements(driver, this);
     }
 
-    public int getSentMailsCount(){
+    public int getSentMailsCount() {
         waits.waitElementVisibility(By.xpath(allSentMailsLocator));
         return allSentMails.size();
     }

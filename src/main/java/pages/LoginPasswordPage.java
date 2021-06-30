@@ -13,7 +13,6 @@ public class LoginPasswordPage {
     private Waits waits;
     private final String passwordLocator = "password";
     private final String nextButtonLocator = "passwordNext";
-    private String password="test099@";
 
     @FindBy(id = nextButtonLocator)
     private WebElement nextButton;
@@ -28,9 +27,12 @@ public class LoginPasswordPage {
         PageFactory.initElements(driver, this);
     }
 
-    public void enterPassword(){
+    public void enterPassword(String password) {
         waits.waitElementToBeClickableByLocator(By.id(nextButtonLocator));
         passwordFiled.sendKeys(password);
+    }
+
+    public void clickNextButton() {
         nextButton.click();
     }
 }

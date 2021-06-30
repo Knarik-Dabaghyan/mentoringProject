@@ -29,7 +29,7 @@ public class GmailMainPage {
     @FindBy(xpath = draftsQuantityLocator)
     private WebElement draftsQuantity;
 
-    @FindBy(xpath ="//a[@class = 'gb_C gb_Ma gb_h']" )
+    @FindBy(xpath = "//a[@class = 'gb_C gb_Ma gb_h']")
     private WebElement userButton;
 
     private final String signOutButtonLocator = "//a[text() = 'Sign out']";
@@ -42,7 +42,7 @@ public class GmailMainPage {
         PageFactory.initElements(driver, this);
     }
 
-    public int getDraftsQuantity(){
+    public int getDraftsQuantity() {
         waits.waitElementToBeClickableByLocator(By.xpath(draftsQuantityLocator));
         return Integer.parseInt(draftsQuantity.getText());
     }
@@ -51,7 +51,7 @@ public class GmailMainPage {
         composeButton.click();
     }
 
-    public void openDraftsPage(){
+    public void openDraftsPage() {
         waits.waitElementToBeClickableByLocator(By.xpath(draftsButtonLocator));
         draftsButton.click();
     }
@@ -61,12 +61,12 @@ public class GmailMainPage {
         return gmailPageIdentifier.isDisplayed();
     }
 
-    public void openSentMails(){
+    public void openSentMails() {
         waits.waitElementToBeClickableByLocator(By.xpath(draftsQuantityLocator));
         sentButton.click();
     }
 
-    public void signOut(){
+    public void signOut() {
         userButton.click();
         waits.waitElementToBeClickableByLocator(By.xpath(signOutButtonLocator));
         signOutButton.click();
