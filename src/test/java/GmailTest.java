@@ -1,13 +1,19 @@
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import pages.*;
 import utils.Waits;
 
-import static org.testng.Assert.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 public class GmailTest {
     WebDriver driver;
@@ -22,15 +28,15 @@ public class GmailTest {
     private final String mailSubjectText = "hello";
     private final String mailBodyText = "test message";
     private final String otherUserMail = "knarikdabaghyan@gmail.com";
-    private String password="test099@";
+    private String password = "test099@";
+    private String name = "Knarik";
     private final String userMail = "mailfortest44@gmail.com";
     int sentMailsBeforeSendinNewMail;
     int draftsQuantityAfterCreatingNewMail;
 
     @BeforeClass
-    public void testSetUp() {
-        System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
-        driver = new ChromeDriver();
+    public void testSetUp() throws MalformedURLException {
+        driver = new RemoteWebDriver(new URL("http://192.168.1.170:5555/wd/hub"), new ChromeOptions());
         driver.manage().window().maximize();
         driver.get("https://mail.google.com/");
         waits = new Waits(driver);
@@ -42,12 +48,16 @@ public class GmailTest {
         loginPasswordPage = new LoginPasswordPage(driver, waits);
     }
 
-    @Test()
-    public void gmailTest() {
+    @BeforeMethod
+    public void login() {
         loginEmailPage.enterEmail(userMail);
         loginEmailPage.clickNextButton();
         loginPasswordPage.enterPassword(password);
         loginPasswordPage.clickNextButton();
+    }
+
+    @Test()
+    public void gmailTest() {
         assertTrue(gmailMainPage.isInGmailPage(), "It's not Gmail main page");
 
         gmailMainPage.openSentMails();
@@ -76,6 +86,26 @@ public class GmailTest {
         assertEquals(sentMailsBeforeSendinNewMail + 1, sentMailsAfterSendingNewMail, "Sent mail isn't in Sent folder");
 
         gmailMainPage.signOut();
+    }
+
+    @Test
+    public void searchByNameTest() {
+        gmailMainPage.sendName(name);
+        assertTrue(gmailMainPage.isContainSearchedName(name), "there is no mail that contain searched name");
+    }
+
+    @Test
+    public void checkHoverText() {
+        gmailMainPage.hoverInboxButton();
+        assertEquals(gmailMainPage.getHoverText(), "Inbox", "Hover text does not match");
+    }
+
+    @Test
+    public void checkStarredPage() throws InterruptedException {
+        assertTrue(gmailMainPage.isInGmailPage(), "It's not Gmail main page");
+        gmailMainPage.navigateToStarredMailPage();
+        assertTrue(gmailMainPage.isContainStarredText("No starred messages"), "Text does not match");
+        gmailMainPage.openAlertWindow();
     }
 
     @AfterClass
