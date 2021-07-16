@@ -1,59 +1,53 @@
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
-import pages.*;
-import utils.Waits;
+import project.driver.DriverSingleton;
+import project.model.User;
+import project.pages.*;
+import project.service.UserCreator;
+import project.utils.TestListener;
+import project.utils.Waits;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
+@Listeners(TestListener.class)
 public class GmailTest {
     WebDriver driver;
     Waits waits;
     SoftAssert softAssert;
-    LoginEmailPage loginEmailPage;
+    LoginPage loginPage;
     GmailMainPage gmailMainPage;
     SentPage sentPage;
     MailCreatingPage mailCreatingPage;
     DraftPage draftPage;
-    LoginPasswordPage loginPasswordPage;
     private final String mailSubjectText = "hello";
     private final String mailBodyText = "test message";
     private final String otherUserMail = "knarikdabaghyan@gmail.com";
-    private String password = "test099@";
     private String name = "Knarik";
-    private final String userMail = "mailfortest44@gmail.com";
     int sentMailsBeforeSendinNewMail;
     int draftsQuantityAfterCreatingNewMail;
 
-    @BeforeClass
-    public void testSetUp() throws MalformedURLException {
-        driver = new RemoteWebDriver(new URL("http://192.168.1.170:5555/wd/hub"), new ChromeOptions());
-        driver.manage().window().maximize();
+    @BeforeMethod
+    public void login() {
+        driver = DriverSingleton.getDriver();
         driver.get("https://mail.google.com/");
         waits = new Waits(driver);
-        loginEmailPage = new LoginEmailPage(driver, waits);
+        loginPage = new LoginPage(driver, waits);
         gmailMainPage = new GmailMainPage(driver, waits);
         sentPage = new SentPage(driver, waits);
         mailCreatingPage = new MailCreatingPage(driver, waits);
         draftPage = new DraftPage(driver, waits);
-        loginPasswordPage = new LoginPasswordPage(driver, waits);
-    }
+        Logger logger = LogManager.getRootLogger();
 
-    @BeforeMethod
-    public void login() {
-        loginEmailPage.enterEmail(userMail);
-        loginEmailPage.clickNextButton();
-        loginPasswordPage.enterPassword(password);
-        loginPasswordPage.clickNextButton();
+        User testUser = UserCreator.withCredentialsFromProperty();
+        loginPage.login(testUser);
+        logger.info("log in with username "+testUser.getUsername()+" "+testUser.getPassword());
+
+
     }
 
     @Test()
@@ -104,12 +98,12 @@ public class GmailTest {
     public void checkStarredPage() throws InterruptedException {
         assertTrue(gmailMainPage.isInGmailPage(), "It's not Gmail main page");
         gmailMainPage.navigateToStarredMailPage();
-        assertTrue(gmailMainPage.isContainStarredText("No starred messages"), "Text does not match");
+        assertTrue(gmailMainPage.isContainStarredText("djfjdfjj"), "Text does not match");
         gmailMainPage.openAlertWindow();
     }
 
-    @AfterClass
+    @AfterMethod
     public void tearDown() {
-        driver.quit();
+        DriverSingleton.closeDriver();
     }
 }
