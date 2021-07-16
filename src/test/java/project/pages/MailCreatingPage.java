@@ -1,5 +1,7 @@
 package project.pages;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,6 +13,7 @@ import project.utils.Waits;
 public class MailCreatingPage {
     WebDriver driver;
     Waits waits;
+    Logger logger = LogManager.getRootLogger();
 
     private final String sendToLocator = "to";
     @FindBy(name = sendToLocator)
@@ -47,21 +50,26 @@ public class MailCreatingPage {
 
     public void clickOnSetSaveAndCloseButton() {
         saveAndCloseButton.click();
+        logger.info("click on close Button");
     }
 
     public void enterOtherUserEmail(String otherUserEmail) {
         waits.waitElementToBeClickableByLocator(By.xpath(sendButtonLocator));
         sendToFiled.sendKeys(otherUserEmail);
+        logger.info("type other username -"+otherUserEmail);
+
     }
 
     public void enterSubjectText(String subjectText) {
         waits.waitElementToBeClickableByLocator(By.xpath(sendButtonLocator));
         subjectFiled.sendKeys(subjectText);
+        logger.info("type subject text"+subjectText);
     }
 
     public void enterBodyText(String bodyText) {
         waits.waitElementToBeClickableByLocator(By.xpath(sendButtonLocator));
         mailBodyFiled.sendKeys(bodyText);
+        logger.info("type body text-"+bodyText);
     }
 
 
@@ -83,5 +91,6 @@ public class MailCreatingPage {
     public void clickSendButton() {
         waits.waitElementToBeClickableByLocator(By.xpath(sendButtonLocator));
         sendButton.click();
+        logger.info("click sent button");
     }
 }

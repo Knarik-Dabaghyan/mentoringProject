@@ -1,5 +1,3 @@
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
@@ -41,13 +39,9 @@ public class GmailTest {
         sentPage = new SentPage(driver, waits);
         mailCreatingPage = new MailCreatingPage(driver, waits);
         draftPage = new DraftPage(driver, waits);
-        Logger logger = LogManager.getRootLogger();
 
         User testUser = UserCreator.withCredentialsFromProperty();
         loginPage.login(testUser);
-        logger.info("log in with username "+testUser.getUsername()+" "+testUser.getPassword());
-
-
     }
 
     @Test()
@@ -84,7 +78,7 @@ public class GmailTest {
 
     @Test
     public void searchByNameTest() {
-        gmailMainPage.sendName(name);
+        gmailMainPage.searchName(name);
         assertTrue(gmailMainPage.isContainSearchedName(name), "there is no mail that contain searched name");
     }
 
@@ -98,7 +92,7 @@ public class GmailTest {
     public void checkStarredPage() throws InterruptedException {
         assertTrue(gmailMainPage.isInGmailPage(), "It's not Gmail main page");
         gmailMainPage.navigateToStarredMailPage();
-        assertTrue(gmailMainPage.isContainStarredText("djfjdfjj"), "Text does not match");
+        assertTrue(gmailMainPage.isContainStarredText("No starred messages"), "Text does not match");
         gmailMainPage.openAlertWindow();
     }
 

@@ -1,5 +1,7 @@
 package project.pages;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -10,6 +12,7 @@ import project.utils.Waits;
 public class GmailMainPage {
     WebDriver driver;
     Waits waits;
+    Logger logger = LogManager.getRootLogger();
 
     private final String gmailPageIdentifierLocator = "//a[@title = 'Gmail' and @class = 'gb_ke gb_pc gb_ie']";
     @FindBy(xpath = gmailPageIdentifierLocator)
@@ -64,16 +67,19 @@ public class GmailMainPage {
 
     public int getDraftsQuantity() {
         waits.waitElementToBeClickableByLocator(By.xpath(draftsQuantityLocator));
+        logger.info("draft quantity is"+draftsQuantity.getText());
         return Integer.parseInt(draftsQuantity.getText());
     }
 
     public void clickOnComposeButton() {
+        logger.info("click on Compose Button");
         composeButton.click();
     }
 
     public void openDraftsPage() {
         waits.waitElementToBeClickableByLocator(By.xpath(draftsButtonLocator));
         draftsButton.click();
+        logger.info("open draft page");
     }
 
     public boolean isInGmailPage() {
@@ -84,12 +90,14 @@ public class GmailMainPage {
     public void openSentMails() {
         waits.waitElementToBeClickableByLocator(By.xpath(draftsQuantityLocator));
         sentButton.click();
+        logger.info("open Sent mail page");
     }
 
-    public void sendName(String name) {
+    public void searchName(String name) {
         waits.waitElementToBeClickableByLocator(By.xpath(searchButtonLocator));
         Actions action = new Actions(driver);
         action.sendKeys(searchButton, name + Keys.ENTER).build().perform();
+        logger.info("search-"+name+"name");
     }
 
     public boolean isContainSearchedName(String name) {
@@ -107,10 +115,12 @@ public class GmailMainPage {
         waits.waitElementToBeClickableByLocator(By.xpath(inboxButtonLocator));
         Actions action = new Actions(driver);
         action.moveToElement(inboxButton).perform();
+        logger.info("hover inbox button");
     }
 
     public String getHoverText() {
         waits.waitElementToBeClickableByLocator(By.xpath(hoverTextLocator));
+        logger.info("hover text is"+hoverText.getText());
         return hoverText.getText();
     }
 
@@ -118,16 +128,19 @@ public class GmailMainPage {
         waits.waitElementVisibility(By.xpath(searchButtonLocator));
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("alert('Welcome to Starred page');");
+        logger.info("open alert window");
     }
 
     public void navigateToStarredMailPage() {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.location = 'https://mail.google.com/mail/u/0/#starred'");
+        logger.info("navigate to starred mail page");
     }
 
     public void signOut() {
         userButton.click();
         waits.waitElementToBeClickableByLocator(By.xpath(signOutButtonLocator));
         signOutButton.click();
+        logger.info("sign out");
     }
 }

@@ -1,5 +1,7 @@
 package project.pages;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,6 +14,7 @@ import project.utils.Waits;
 public class DraftPage {
     WebDriver driver;
     Waits waits;
+    Logger logger = LogManager.getRootLogger();
 
     private final String allMailsDraftsLocator = "//span[text() = 'Draft']//ancestor::tr[@role = 'row']";
     @FindBy(xpath = allMailsDraftsLocator)
@@ -30,6 +33,8 @@ public class DraftPage {
     public void openLastMailFromDrafts() {
         waits.waitElementToBeClickableByLocator(By.xpath(allMailsDraftsLocator));
         allMailsInDrafts.get(0).click();
+        logger.info("Open last mail from draft");
+
     }
 
 }

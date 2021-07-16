@@ -1,5 +1,7 @@
 package project.pages;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,6 +14,7 @@ import project.model.User;
 public class LoginPage {
     private final WebDriver driver;
     private Waits waits;
+    Logger logger = LogManager.getRootLogger();
     private final String nextButtonLocator = "//div[@id='identifierNext']";
     private final String passwordLocator = "password";
     private final String nextButtonPasswordLocator = "passwordNext";
@@ -37,19 +40,12 @@ public class LoginPage {
     public void login(User user) {
         waits.waitElementToBeClickableByLocator(By.xpath(nextButtonLocator));
         emailFiled.sendKeys(user.getUsername());
+        logger.info("type username"+user.getUsername()+" ");
         nextButton.click();
         waits.waitElementToBeClickableByLocator(By.id(nextButtonPasswordLocator));
         passwordFiled.sendKeys(user.getPassword());
+        logger.info("type password"+user.getPassword());
         waits.waitElementToBeClickableByLocator(By.id(nextButtonPasswordLocator));
-        nextButtonPassword.click();
-    }
-
-
-    public void clickNextButtonEmailPage() {
-        nextButton.click();
-    }
-
-    public void clickNextButtonPasswordPage() {
         nextButtonPassword.click();
     }
 }
