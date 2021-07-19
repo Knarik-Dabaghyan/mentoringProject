@@ -17,7 +17,7 @@ public class DriverSingleton {
         if (null == driver){
             switch (System.getProperty("browser","chrome")){
                 case "firefox": {
-                    WebDriverManager.chromedriver().setup();
+                    WebDriverManager.firefoxdriver().setup();
                     driver = new FirefoxDriver();
                 }
                 case "edge": {

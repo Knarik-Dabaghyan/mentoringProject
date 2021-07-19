@@ -67,7 +67,7 @@ public class GmailMainPage {
 
     public int getDraftsQuantity() {
         waits.waitElementToBeClickableByLocator(By.xpath(draftsQuantityLocator));
-        logger.info("draft quantity is"+draftsQuantity.getText());
+        logger.info("draft quantity is "+draftsQuantity.getText());
         return Integer.parseInt(draftsQuantity.getText());
     }
 

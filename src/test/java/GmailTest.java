@@ -40,7 +40,7 @@ public class GmailTest {
         mailCreatingPage = new MailCreatingPage(driver, waits);
         draftPage = new DraftPage(driver, waits);
 
-        User testUser = UserCreator.withCredentialsFromProperty();
+        User testUser = UserCreator.getCredentialsFromProperty();
         loginPage.login(testUser);
     }
 

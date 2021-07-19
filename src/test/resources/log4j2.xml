@@ -21,7 +21,7 @@
     <Loggers>
         <Root level="trace">
             <AppenderRef ref="Console"/>
-            <AppenderRef ref="File"/>
+            <AppenderRef ref="File-Log"/>
         </Root>
     </Loggers>
 </Configuration>
