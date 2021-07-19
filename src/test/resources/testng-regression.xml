@@ -3,7 +3,11 @@
 <suite name="All tests" verbose="1" >
     <test name="All tests"   >
         <classes>
-            <class name="GmailTest"/>
+            <class name="GmailTest">
+            <methods>
+            <include name="gmailTest" />
+            </methods>
+           </class>
         </classes>
     </test>
 </suite>
