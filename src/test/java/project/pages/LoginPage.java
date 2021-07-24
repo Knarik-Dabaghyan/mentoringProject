@@ -39,12 +39,12 @@ public class LoginPage {
 
     public void login(User user) {
         waits.waitElementToBeClickableByLocator(By.xpath(nextButtonLocator));
-        emailFiled.sendKeys(user.getUsername());
-        logger.info("type username"+user.getUsername()+" ");
+        emailFiled.sendKeys(user.getUserEmail());
+        logger.info("type username"+user.getUserEmail()+" ");
         nextButton.click();
         waits.waitElementToBeClickableByLocator(By.id(nextButtonPasswordLocator));
-        passwordFiled.sendKeys(user.getPassword());
-        logger.info("type password"+user.getPassword());
+        passwordFiled.sendKeys(user.getUserPassword());
+        logger.info("type password"+user.getUserPassword());
         waits.waitElementToBeClickableByLocator(By.id(nextButtonPasswordLocator));
         nextButtonPassword.click();
     }

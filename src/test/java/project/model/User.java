@@ -1,53 +1,43 @@
 package project.model;
 
-import java.util.Objects;
-
 public class User {
+    private  String userEmail;
+    private  String userPassword;
 
-    private String username;
-    private String password;
-
-
-    public User(String username, String password) {
-        this.username = username;
-        this.password = password;
+    public User(UserBuilder builder) {
+        this.userEmail = builder.userEmail;
+        this.userPassword = builder.password;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserEmail(){
+        return userEmail;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public String getUserPassword(){
+        return userPassword;
     }
 
     @Override
     public String toString() {
-        return "User{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+        return "UserEmail: " +this.userEmail+"UserPassword"+this.getUserPassword();
     }
+    public static class UserBuilder {
+        private String userEmail;
+        private String password;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
-        User user = (User) o;
-        return Objects.equals(getUsername(), user.getUsername()) &&
-                Objects.equals(getPassword(), user.getPassword());
-    }
+        public UserBuilder userEmail(String userEmail) {
+            this.userEmail = userEmail;
+            return this;
+        }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getUsername(), getPassword());
+        public UserBuilder password(String password) {
+            this.password = password;
+            return this;
+        }
+        public User build() {
+            return new User(this);
+        }
+
     }
 }
+
