@@ -1,3 +1,5 @@
+package UITest;
+
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;

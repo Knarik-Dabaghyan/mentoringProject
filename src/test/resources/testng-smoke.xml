@@ -3,7 +3,7 @@
 <suite name="All tests" verbose="1" >
     <test name="All tests"   >
         <classes>
-            <class name="GmailTest">
+            <class name="UITest.GmailTest">
                 <methods>
                     <include name="searchByNameTest" />
                     <include name="checkHoverText" />
