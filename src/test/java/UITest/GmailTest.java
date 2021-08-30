@@ -7,14 +7,14 @@ import project.driver.DriverSingleton;
 import project.model.User;
 import project.pages.*;
 import project.service.UserCreator;
-import project.utils.TestListener;
+
 import project.utils.Waits;
 
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-@Listeners(TestListener.class)
+
 public class GmailTest {
     WebDriver driver;
     Waits waits;
